@@ -6,7 +6,7 @@ client.commands = new Discord.Collection()
 
 const secretToken = require('./token')
 const { prefix, coffeeTime } = require('./config')
-const { getTimeUntilTarget, getPatchNotes } = require('./helpers')
+const { getTimeUntilTarget, getPatchNotes, timeInOneDay } = require('./helpers')
 
 function sendCoffeeAlert(channelName) {
     const coffeeAlertMessage = 

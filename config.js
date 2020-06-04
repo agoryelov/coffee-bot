@@ -2,7 +2,7 @@ const config = {
     prefix: 'coffee ',
     coffeeTime: {
         hour: 14,
-        minute: 0,
+        minute: 10,
         second: 0
     }
 }
