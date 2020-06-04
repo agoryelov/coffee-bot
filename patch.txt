@@ -1,0 +1,3 @@
+- some bugs
++ lots of other bugs
++ commands added: countdown, help, patch, ping, speak, time
