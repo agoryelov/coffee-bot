@@ -16,6 +16,7 @@ module.exports = {
 	name: 'countdown',
 	execute(message, args) {
         const tMinus = getTimeUntilTarget(coffeeTime.hour, coffeeTime.minute, coffeeTime.second)
+        console.log(tMinus)
         const tFormatted = formatTime(tMinus)
 
         message.channel.send(`:coffee: Coffee time :coffee: is in ${tFormatted}`)

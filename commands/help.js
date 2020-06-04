@@ -4,6 +4,6 @@ module.exports = {
         const reponse = "You can call me by typing 'coffee <command>'" +
         "\n\n" + "Available commands: countdown, help, patch, ping, speak, time"
 
-		message.reply(reponse);
+		message.reply(reponse)
 	},
 }

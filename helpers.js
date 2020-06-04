@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs')
 const timeInOneDay = 24 * 60 * 60 * 1000
 
 function getTimeUntilTarget(hours, minutes, seconds) {
