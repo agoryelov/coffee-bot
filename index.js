@@ -4,7 +4,8 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
 
-const { key, prefix, coffeeTime } = require('./config')
+const secretToken = require('./token')
+const { prefix, coffeeTime } = require('./config')
 const { getTimeUntilTarget, getPatchNotes } = require('./helpers')
 
 function sendCoffeeAlert(channelName) {
@@ -23,6 +24,8 @@ function sendCoffeeAlert(channelName) {
 }
 
 client.once('ready', () => {
+    console.log('CoffeeBot ready...')
+
     const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
     for (const file of commandFiles) {
@@ -31,9 +34,7 @@ client.once('ready', () => {
     }
 
     const timeout = getTimeUntilTarget(coffeeTime.hour, coffeeTime.minute, coffeeTime.second + 15)
-    const channel = 'appdev'
 
-    sendCoffeeAlert(channel)
     setTimeout(() => {
         const channel = 'appdev'
         sendCoffeeAlert(channel)
@@ -53,4 +54,4 @@ client.on('message', message => {
     client.commands.get(command).execute(message, args)
 })
 
-client.login(key)
+client.login(secretToken)
