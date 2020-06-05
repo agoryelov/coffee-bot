@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "discord.js": "^12.2.0",
+    "moment": "^2.26.0",
+    "parse-duration": "^0.4.4"
   }
 }
