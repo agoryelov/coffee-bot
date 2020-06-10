@@ -3,7 +3,7 @@ const timeInOneDay = 24 * 60 * 60 * 1000
 
 function getTimeUntilTarget(hours, minutes, seconds) {
     let today = new Date()
-    let target = new Date(today.getFullYear(), today.getMonth(), today.getDay(), hours, minutes, seconds)
+    let target = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes, seconds)
 
     let timeUntilTarget = target - today
 
