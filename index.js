@@ -8,19 +8,35 @@ const secretToken = require('./token')
 const { prefix, coffeeTime } = require('./config')
 const { getTimeUntilTarget, getPatchNotes, timeInOneDay } = require('./helpers')
 
-function sendCoffeeAlert(channelName) {
-    const coffeeAlertMessage = 
-    '@here ☕ Coffee Alert ! ☕' +
-        '\n' + '```diff' +
-        '\n' + 'Latest patch notes: ' +
-        '\n' +
-        '\n' + getPatchNotes() +
-        '\n' + '```'
+function sendCoffeeAlert(channelName) {        
+    const embed = {
+        "footer": {
+            "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "text": "made for appdev"
+        },
+        "thumbnail": {
+            "url": "https://media.giphy.com/media/loRXcxxkcdgVyFqqIK/giphy.gif"
+        },
+        "author": {
+            "name": "Coffee Bot",
+            "icon_url": "https://i.imgur.com/7ZN1Rrw.jpg"
+        },
+        "fields": [
+            {
+                "name": "------------------",
+                "value": ":coffee::coffee::coffee::coffee::coffee:"
+            },
+            {
+                "name": "Coffee Alert",
+                "value": "Now with fancy embeds !"
+            }
+        ]
+    }
 
     let channel = client.channels.cache.find(u => u.name === channelName)
     if (!channel) channel = client.channels.cache.find(u => u.type === 'text')
     
-    channel.send(coffeeAlertMessage)
+    channel.send('@here', { embed })
 }
 
 client.once('ready', () => {
@@ -32,9 +48,9 @@ client.once('ready', () => {
         const command = require(`./commands/${file}`)
         client.commands.set(command.name, command)
     }
-
+    
     const timeout = getTimeUntilTarget(coffeeTime.hour, coffeeTime.minute, coffeeTime.second + 15)
-
+    
     setTimeout(() => {
         const channel = 'appdev'
         sendCoffeeAlert(channel)
