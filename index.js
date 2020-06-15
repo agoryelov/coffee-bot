@@ -10,27 +10,15 @@ const { getTimeUntilTarget, getPatchNotes, timeInOneDay } = require('./helpers')
 
 function sendCoffeeAlert(channelName) {        
     const embed = {
+        "title": "**Coffee Alert**",
+        "description": "Make your Monday less mundane with a coffee!",
+        "color": 32896,
         "footer": {
-            "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png",
             "text": "made for appdev"
         },
-        "thumbnail": {
-            "url": "https://media.giphy.com/media/loRXcxxkcdgVyFqqIK/giphy.gif"
-        },
-        "author": {
-            "name": "Coffee Bot",
-            "icon_url": "https://i.imgur.com/7ZN1Rrw.jpg"
-        },
-        "fields": [
-            {
-                "name": "------------------",
-                "value": ":coffee::coffee::coffee::coffee::coffee:"
-            },
-            {
-                "name": "Coffee Alert",
-                "value": "Now with fancy embeds !"
-            }
-        ]
+        "image": {
+            "url": "https://im5.ezgif.com/tmp/ezgif-5-d516283ee8c6.gif"
+        }
     }
 
     let channel = client.channels.cache.find(u => u.name === channelName)
