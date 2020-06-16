@@ -1,30 +1,27 @@
 const fs = require('fs')
+const moment = require('moment')
 
 const Discord = require('discord.js')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
 
-const secretToken = require('./token')
+const apiKeys = require('./token')
 const { prefix, coffeeTime } = require('./config')
-const { getTimeUntilTarget, getPatchNotes, timeInOneDay } = require('./helpers')
+const { getTimeUntilTarget, getRandomGif, getCustomEmbed, timeInOneDay, daysOfTheWeek } = require('./helpers')
 
-function sendCoffeeAlert(channelName) {        
-    const embed = {
-        "title": "**Coffee Alert**",
-        "description": "Make your Monday less mundane with a coffee!",
-        "color": 32896,
-        "footer": {
-            "text": "made for appdev"
-        },
-        "image": {
-            "url": "https://im5.ezgif.com/tmp/ezgif-5-d516283ee8c6.gif"
-        }
-    }
+function sendCoffeeAlert(channelName) {
+    let dayOfTheWeek = daysOfTheWeek[moment().day()]
+
+    if (dayOfTheWeek == 'Saturday' || dayOfTheWeek == 'Sunday') return
+    let embed = getCustomEmbed(dayOfTheWeek)
 
     let channel = client.channels.cache.find(u => u.name === channelName)
     if (!channel) channel = client.channels.cache.find(u => u.type === 'text')
     
-    channel.send('@here', { embed })
+    getRandomGif('coffee time').then(gifUrl => {
+        embed.setThumbnail(gifUrl)
+        channel.send('@here', embed)
+    })
 }
 
 client.once('ready', () => {
@@ -37,8 +34,8 @@ client.once('ready', () => {
         client.commands.set(command.name, command)
     }
     
-    const timeout = getTimeUntilTarget(coffeeTime.hour, coffeeTime.minute, coffeeTime.second + 15)
-    
+    const timeout = getTimeUntilTarget(coffeeTime.hour, coffeeTime.minute, coffeeTime.second + 10)
+
     setTimeout(() => {
         const channel = 'appdev'
         sendCoffeeAlert(channel)
@@ -58,4 +55,4 @@ client.on('message', message => {
     client.commands.get(command).execute(message, args)
 })
 
-client.login(secretToken)
+client.login(apiKeys.discord)

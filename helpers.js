@@ -1,5 +1,10 @@
-const fs = require('fs')
-const timeInOneDay = 24 * 60 * 60 * 1000
+const fs            = require('fs')
+const axios         = require('axios').default
+const apiKeys       = require('./token')
+const Discord       = require('discord.js')
+
+const timeInOneDay  = 24 * 60 * 60 * 1000
+const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 function getTimeUntilTarget(hours, minutes, seconds) {
     let today = new Date()
@@ -12,19 +17,60 @@ function getTimeUntilTarget(hours, minutes, seconds) {
     return timeUntilTarget
 }
 
-function getPatchNotes() {
-    let patch = ''
+function getRandomTemplate() {
+    let template = 'Another <weekday>, another coffee alert.'
+
     try {  
-        patch = fs.readFileSync('patch.txt', 'utf8')
+        let templates = fs.readFileSync('templates.txt', 'utf8')
+        let lines = templates.split('\n')
+        template = lines[Math.floor(Math.random()*lines.length)]
     } catch(e) {
         console.error(e)
     }
 
-    return patch
+    return template
+}
+
+function getRandomGif(searchTerm) {
+    let searchUrl = 'https://api.tenor.com/v1/random?q=' + searchTerm 
+                + '&key=' + apiKeys.tenor 
+                + '&limit=1'
+                + '&contentfilter=high'
+                + '&media_filter=minimal'
+
+    let fallbackUrl = 'https://media1.tenor.com/images/a7ae94274d1bc120b1a59382ef5ac66b/tenor.gif'
+
+    return axios.get(searchUrl)
+        .then((res) => {
+            let searchResults = res.data.results
+            if (searchResults.length == 0) 
+                return fallbackUrl
+            return searchResults[0].media[0].gif.url
+        })
+        .catch(err => {
+            console.log(err)
+            return fallbackUrl
+        })
+}
+
+function getCustomEmbed(dayOfTheWeek) {
+    
+    let messageTemplate = getRandomTemplate().replace('<weekday>', dayOfTheWeek)
+    
+    const embed = new Discord.MessageEmbed()
+        .setColor(32896)
+        .setTitle('**Coffee Alert**')
+        .setDescription(messageTemplate)
+        .setFooter('made for appdev')
+
+    return embed
 }
 
 module.exports = {
     timeInOneDay,
+    daysOfTheWeek,
     getTimeUntilTarget,
-    getPatchNotes
+    getRandomTemplate,
+    getRandomGif,
+    getCustomEmbed
 }

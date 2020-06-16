@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
     "discord.js": "^12.2.0",
     "moment": "^2.26.0",
     "parse-duration": "^0.4.4"
