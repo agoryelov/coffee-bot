@@ -31,6 +31,6 @@ const apiKeys = {
 
 module.exports = apiKeys
 ```
-- (Optional) Add templates.txt to root folder with custom message templates ('<weekday>' will be replaced with current day of the week)
+- (Optional) Add templates.txt to root folder with custom message templates
 - Install dependencies `npm i`
 - Start the bot `node index.js`
