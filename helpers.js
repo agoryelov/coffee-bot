@@ -17,24 +17,18 @@ function getTimeUntilTarget(hours, minutes, seconds) {
     return timeUntilTarget
 }
 
-function getRandomTemplate() {
-    let template = 'Another <weekday>, another coffee alert.'
-
-    try {  
-        let templates = fs.readFileSync('templates.txt', 'utf8')
-        let lines = templates.split('\n')
-        template = lines[Math.floor(Math.random()*lines.length)]
-    } catch(e) {
-        console.error(e)
-    }
-
-    return template
+function getTemplate() {
+    return "Test it harder" +
+        "\n" + "Make it cleaner" +
+        "\n" + "Code it faster" +
+        "\n" + "Makes us stronger" +
+        "\n" + "Thank you coffee"
 }
 
 function getRandomGif(searchTerm) {
-    let searchUrl = 'https://api.tenor.com/v1/random?q=' + searchTerm 
+    let searchUrl = 'https://api.tenor.com/v1/search?q=' + searchTerm 
                 + '&key=' + apiKeys.tenor 
-                + '&limit=1'
+                + '&limit=50'
                 + '&contentfilter=high'
                 + '&media_filter=minimal'
 
@@ -43,8 +37,11 @@ function getRandomGif(searchTerm) {
     return axios.get(searchUrl)
         .then((res) => {
             let searchResults = res.data.results
-            if (searchResults.length == 0) 
+            let numResults = searchResults.length
+
+            if (numResults == 0) 
                 return fallbackUrl
+
             return searchResults[0].media[0].gif.url
         })
         .catch(err => {
@@ -55,7 +52,7 @@ function getRandomGif(searchTerm) {
 
 function getCustomEmbed(dayOfTheWeek) {
     
-    let messageTemplate = getRandomTemplate().replace('<weekday>', dayOfTheWeek)
+    let messageTemplate = getTemplate().replace('<weekday>', dayOfTheWeek)
     
     const embed = new Discord.MessageEmbed()
         .setColor(32896)
