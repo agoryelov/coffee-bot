@@ -22,10 +22,15 @@
 cd CoffeeBot 
 touch token.js
 ```
-- Paste your Discord Bot's token in the following format
+- Add discord (https://discord.com/developers/applications) and tenor (https://tenor.com/gifapi) api keys to token.js
 ```
-const key = "YOUR KEY HERE";
-module.exports = key;
+const apiKeys = {
+    discord: 'DISCORDKEY',
+    tenor: 'TENORKEY'
+}
+
+module.exports = apiKeys
 ```
+- (Optional) Add templates.txt to root folder with custom message templates
 - Install dependencies `npm i`
 - Start the bot `node index.js`
