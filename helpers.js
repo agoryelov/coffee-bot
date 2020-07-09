@@ -67,7 +67,7 @@ module.exports = {
     timeInOneDay,
     daysOfTheWeek,
     getTimeUntilTarget,
-    getRandomTemplate,
+    getTemplate,
     getRandomGif,
     getCustomEmbed
 }
