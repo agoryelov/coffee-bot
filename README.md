@@ -1,4 +1,4 @@
-# CoffeeBot
+# coffee-bot
 
 > Coffee reminder bot for your discord server
 
